@@ -1,16 +1,26 @@
 package com.cooperativa.assembleia.web.service.converter;
 
-import com.cooperativa.assembleia.api.dto.Pauta;
-import com.cooperativa.assembleia.web.entity.PautaEntity;
+import com.cooperativa.assembleia.api.request.PautaRequest;
+import com.cooperativa.assembleia.api.response.PautaResponse;
+import com.cooperativa.assembleia.web.entity.Pauta;
+import org.springframework.stereotype.Service;
 
-public class PautaConverter implements Converter<PautaEntity, Pauta> {
-    @Override
-    public PautaEntity toEntity(Pauta dto) {
-        return null;
+@Service
+public class PautaConverter  {
+
+    private final PautaRequestToEntity toEntity;
+    private final PautaEntityToResponse toResponse;
+
+    public PautaConverter(PautaRequestToEntity toEntity, PautaEntityToResponse toResponse) {
+        this.toEntity = toEntity;
+        this.toResponse = toResponse;
     }
 
-    @Override
-    public Pauta toDTO(PautaEntity entity) {
-        return null;
+    public Pauta toEntity(PautaRequest request) {
+        return toEntity.apply(request);
+    }
+
+    public PautaResponse toResponse(Pauta entity) {
+        return toResponse.apply(entity);
     }
 }

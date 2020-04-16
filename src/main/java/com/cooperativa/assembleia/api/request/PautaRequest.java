@@ -1,6 +1,5 @@
-package com.cooperativa.assembleia.api.dto;
+package com.cooperativa.assembleia.api.request;
 
-import lombok.Builder;
 import lombok.Data;
 
 import javax.validation.constraints.Min;
@@ -8,11 +7,8 @@ import javax.validation.constraints.NotEmpty;
 import java.io.Serializable;
 
 @Data
-@Builder
-public class Pauta implements Serializable {
+public class PautaRequest implements Serializable {
     private static final long serialVersionUID = 5541617492602158952L;
-
-    private Long id;
 
     @NotEmpty(message = "Pergunta inválida")
     private String pergunta;

@@ -1,12 +1,15 @@
 package com.cooperativa.assembleia.web.service;
 
-import com.cooperativa.assembleia.api.dto.Pauta;
-import com.cooperativa.assembleia.web.entity.PautaEntity;
+import com.cooperativa.assembleia.api.request.PautaRequest;
+import com.cooperativa.assembleia.api.request.VotoRequest;
+import com.cooperativa.assembleia.api.response.PautaResponse;
+import com.cooperativa.assembleia.web.entity.Pauta;
 import com.cooperativa.assembleia.web.repository.PautaRepository;
 import com.cooperativa.assembleia.web.service.converter.PautaConverter;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import java.security.InvalidParameterException;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -16,30 +19,50 @@ public class PautaService {
 
     private final PautaRepository repository;
     private final PautaConverter converter;
+    private final VotoService votoService;
+    private final SessaoService sessaoService;
 
-    @Autowired
-    public PautaService(PautaRepository repository, PautaConverter converter) {
+    public PautaService(PautaRepository repository, PautaConverter converter, VotoService votoService,
+                        SessaoService sessaoService) {
         this.repository = repository;
         this.converter = converter;
+        this.votoService = votoService;
+        this.sessaoService = sessaoService;
     }
 
-    public List<Pauta> buscarTodas() {
-        return repository.findAll().stream()
-                .map(converter::toDTO)
+    @Transactional(readOnly = true)
+    public List<PautaResponse> buscarTodas() {
+        return repository.findAll()
+                .stream()
+                .map(converter::toResponse)
                 .collect(Collectors.toList());
     }
 
-    public Optional<Pauta> buscarPorId(Long id) {
-        return repository.findById(id).map(converter::toDTO);
+    @Transactional(readOnly = true)
+    public Optional<PautaResponse> buscarOptionalResponsePorId(Long id) {
+        return repository.findById(id).map(converter::toResponse);
     }
 
-    public Optional<Pauta> buscarUltima() {
-        return repository.findFirstByOrderByCriacaoDesc().map(converter::toDTO);
+    @Transactional
+    public PautaResponse incluir(PautaRequest pautaRequest) {
+        Pauta pauta = repository.save(converter.toEntity(pautaRequest));
+        return converter.toResponse(pauta);
     }
 
-    public Pauta incluir(Pauta pauta) {
-        PautaEntity pautaCriada = repository.save(converter.toEntity(pauta));
-        return converter.toDTO(pautaCriada);
+    private Pauta buscarPorId(Long id) {
+        return repository.findById(id)
+                .orElseThrow(() -> new InvalidParameterException("Identificador de pauta inválido"));
+    }
+
+    @Transactional
+    public void abrirSessao(Long id, Long segundosDuracao) {
+        Pauta pauta = buscarPorId(id);
+        sessaoService.abrir(pauta, segundosDuracao);
+    }
+
+    @Transactional
+    public void votar(Long id, VotoRequest voto) {
+        votoService.salvar(voto, buscarPorId(id));
     }
 
 }

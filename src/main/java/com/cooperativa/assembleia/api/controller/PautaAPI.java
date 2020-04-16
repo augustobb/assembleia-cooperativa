@@ -1,8 +1,9 @@
 package com.cooperativa.assembleia.api.controller;
 
-import com.cooperativa.assembleia.api.dto.Pauta;
-import com.cooperativa.assembleia.api.dto.Resultado;
-import com.cooperativa.assembleia.api.dto.Voto;
+import com.cooperativa.assembleia.api.request.PautaRequest;
+import com.cooperativa.assembleia.api.request.VotoRequest;
+import com.cooperativa.assembleia.api.response.PautaResponse;
+import com.cooperativa.assembleia.api.response.ResultadoResponse;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -13,23 +14,20 @@ import java.util.List;
 public interface PautaAPI {
 
     @GetMapping
-    ResponseEntity<List<Pauta>> buscarTodas();
+    ResponseEntity<List<PautaResponse>> buscarTodas();
 
     @GetMapping("/{id}")
-    ResponseEntity<Pauta> buscarPorId(@PathVariable Long id);
-
-    @GetMapping("/ultima")
-    ResponseEntity<Pauta> buscarUltima();
+    ResponseEntity<PautaResponse> buscarPorId(@PathVariable Long id);
 
     @PostMapping
-    ResponseEntity<Pauta> incluir(@RequestBody @Valid Pauta pauta);
+    ResponseEntity<PautaResponse> incluir(@RequestBody @Valid PautaRequest pauta);
+
+    @PostMapping("/{id}/abrir-sessao")
+    ResponseEntity<Void> abrirSessao(@PathVariable Long id, @RequestParam Long segundosDuracao);
 
     @PostMapping("/{id}/votar")
-    ResponseEntity<Void> votar(@PathVariable Long id, @RequestBody @Valid Voto voto);
+    ResponseEntity<Void> votar(@PathVariable Long id, @RequestBody @Valid VotoRequest voto);
 
     @GetMapping("/{id}/resultados")
-    ResponseEntity<Resultado> buscarResultadoPauta(@PathVariable Long id);
-
-    @GetMapping("/ultima/resultados")
-    ResponseEntity<Resultado> buscarResultadoUltimaPauta();
+    ResponseEntity<ResultadoResponse> buscarResultadoPauta(@PathVariable Long id);
 }
