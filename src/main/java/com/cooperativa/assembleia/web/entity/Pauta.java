@@ -26,5 +26,9 @@ public class Pauta implements Serializable {
     @Column(name = "pergunta", nullable = false)
     private String pergunta;
 
+    @OneToOne
+    @JoinColumn(name = "resultado_id", referencedColumnName = "id")
+    private Resultado resultado;
+
 
 }

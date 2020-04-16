@@ -1,5 +1,6 @@
 package com.cooperativa.assembleia.web.entity;
 
+import com.cooperativa.assembleia.web.service.EncerramentoSessaoService;
 import com.cooperativa.assembleia.web.task.EncerramentoSessaoTask;
 import lombok.*;
 
@@ -33,7 +34,9 @@ public class Sessao implements Serializable {
 
     @Getter(AccessLevel.NONE)
     @Column(name = "encerrada", nullable = false)
-    private Boolean encerrada = false;
+    private Boolean encerrada;
+
+    private transient EncerramentoSessaoService encerramentoService;
 
     public boolean isEncerrada() {
         return this.encerrada;
@@ -42,5 +45,9 @@ public class Sessao implements Serializable {
     public void agendarEncerramento() {
         EncerramentoSessaoTask encerramento = new EncerramentoSessaoTask(this);
         new java.util.Timer().schedule(encerramento, this.getSegundosDuracao()*1000);
+    }
+
+    public void encerrar() {
+        encerramentoService.encerrarSessao(this);
     }
 }

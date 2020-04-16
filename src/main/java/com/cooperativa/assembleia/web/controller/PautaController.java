@@ -7,7 +7,6 @@ import com.cooperativa.assembleia.api.response.PautaResponse;
 import com.cooperativa.assembleia.api.response.ResultadoResponse;
 import com.cooperativa.assembleia.web.service.PautaService;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.boot.context.properties.bind.DefaultValue;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
@@ -45,8 +44,8 @@ public class PautaController implements PautaAPI {
     }
 
     @Override
-    public ResponseEntity<Void> abrirSessao(Long id,
-            @Min(value = 10, message = "Duração mínima: 10s") @DefaultValue("60") Long segundosDuracao) {
+    public ResponseEntity<Void> abrirSessao(Long id, @Valid @Min(value = 10, message = "Duração mínima: 10s") Long segundosDuracao) {
+        log.info("Incluindo sessão para pauta: {}, duração: {}s...", id, segundosDuracao);
         service.abrirSessao(id, segundosDuracao);
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }

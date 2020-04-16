@@ -12,5 +12,4 @@ public class PautaResponse implements Serializable {
 
     private Long id;
     private String pergunta;
-    private Long segundosDuracao;
 }

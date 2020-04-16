@@ -6,6 +6,7 @@ import com.cooperativa.assembleia.api.response.PautaResponse;
 import com.cooperativa.assembleia.web.entity.Pauta;
 import com.cooperativa.assembleia.web.repository.PautaRepository;
 import com.cooperativa.assembleia.web.service.converter.PautaConverter;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -14,6 +15,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+@Slf4j
 @Service
 public class PautaService {
 
@@ -50,8 +52,11 @@ public class PautaService {
     }
 
     private Pauta buscarPorId(Long id) {
-        return repository.findById(id)
-                .orElseThrow(() -> new InvalidParameterException("Identificador de pauta inválido"));
+        return repository.findById(id).orElseThrow(() -> {
+            String message = "Não foi possível encontrar pauta com identificador " + id;
+            log.error(message);
+            return new InvalidParameterException(message);
+        });
     }
 
     @Transactional
