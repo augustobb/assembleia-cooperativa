@@ -11,8 +11,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.validation.Valid;
-import javax.validation.constraints.Min;
 import java.util.List;
 
 @Slf4j
@@ -38,20 +36,20 @@ public class PautaController implements PautaAPI {
     }
 
     @Override
-    public ResponseEntity<PautaResponse> incluir(@Valid PautaRequest pauta) {
+    public ResponseEntity<PautaResponse> incluir(PautaRequest pauta) {
         log.info("Incluindo pauta: {}...", pauta.getPergunta());
         return ResponseEntity.status(HttpStatus.CREATED).body(service.incluir(pauta));
     }
 
     @Override
-    public ResponseEntity<Void> abrirSessao(Long id, @Valid @Min(value = 10, message = "Duração mínima: 10s") Long segundosDuracao) {
+    public ResponseEntity<Void> abrirSessao(Long id, Long segundosDuracao) {
         log.info("Incluindo sessão para pauta: {}, duração: {}s...", id, segundosDuracao);
         service.abrirSessao(id, segundosDuracao);
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
     @Override
-    public ResponseEntity<Void> votar(Long id, @Valid VotoRequest voto) {
+    public ResponseEntity<Void> votar(Long id, VotoRequest voto) {
         log.info("Incluindo voto para pauta: {}, associado: {}, resposta:{}...", id, voto.getAssociadoId(), voto.getResposta());
         service.votar(id, voto);
         return ResponseEntity.status(HttpStatus.CREATED).build();

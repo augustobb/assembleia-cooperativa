@@ -25,7 +25,7 @@ public class EncerramentoSessaoService {
         salvarEncerramento(sessao);
         Pauta pauta = sessao.getPauta();
         Resultado resultado = contabilizarResultado(sessao.getPauta());
-        log.info("Acaba de ser encerrada a Pauta {}, {}, e o resultado foi {}, com {} votos a favor e {} votos contra",
+        log.info("Acaba de ser encerrada a Pauta {} ({}), e o resultado foi {}, com {} votos a favor e {} votos contra",
                 pauta.getId(), pauta.getPergunta(), resultado.getResposta(), resultado.getVotosSim(), resultado.getVotosNao());
     }
 

@@ -4,7 +4,6 @@ import com.cooperativa.assembleia.web.entity.Pauta;
 import com.cooperativa.assembleia.web.entity.Resultado;
 import com.cooperativa.assembleia.web.repository.PautaRepository;
 import com.cooperativa.assembleia.web.repository.ResultadoRepository;
-import com.cooperativa.assembleia.web.repository.VotoRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -12,13 +11,13 @@ import org.springframework.transaction.annotation.Transactional;
 public class ResultadoService {
 
     private final ResultadoRepository repository;
-    private final VotoRepository votoRepository;
+    private final VotoService votoService;
     private final PautaRepository pautaRepository;
 
-    public ResultadoService(ResultadoRepository repository, VotoRepository votoRepository,
+    public ResultadoService(ResultadoRepository repository, VotoService votoService,
                             PautaRepository pautaRepository) {
         this.repository = repository;
-        this.votoRepository = votoRepository;
+        this.votoService = votoService;
         this.pautaRepository = pautaRepository;
     }
 
@@ -30,7 +29,10 @@ public class ResultadoService {
     }
 
     private Resultado calcularResultado(Pauta pauta) {
-        return Resultado.builder().build();
+        return Resultado.builder()
+                .votosSim(votoService.countVotosSim(pauta))
+                .votosNao(votoService.countVotosNao(pauta))
+                .build();
     }
 
     private void registrarResultado(Pauta pauta) {

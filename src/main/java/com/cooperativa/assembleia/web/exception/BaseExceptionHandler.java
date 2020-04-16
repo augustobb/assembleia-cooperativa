@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
+import javax.validation.ConstraintViolationException;
 import java.security.InvalidParameterException;
 import java.util.Collections;
 import java.util.List;
@@ -45,6 +46,11 @@ public class BaseExceptionHandler extends ResponseEntityExceptionHandler {
 
     @ExceptionHandler(InvalidParameterException.class)
     public final ResponseEntity<Object> handleInvalidParameterException(InvalidParameterException exception) {
+        return new ResponseEntity<>(new ErrorDetails(exception.getMessage()), HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(ConstraintViolationException.class)
+    public final ResponseEntity<Object> handleConstraintViolationException(ConstraintViolationException exception) {
         return new ResponseEntity<>(new ErrorDetails(exception.getMessage()), HttpStatus.BAD_REQUEST);
     }
 
