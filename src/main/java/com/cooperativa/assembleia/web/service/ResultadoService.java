@@ -14,8 +14,7 @@ public class ResultadoService {
     private final VotoService votoService;
     private final PautaRepository pautaRepository;
 
-    public ResultadoService(ResultadoRepository repository, VotoService votoService,
-                            PautaRepository pautaRepository) {
+    public ResultadoService(ResultadoRepository repository, VotoService votoService, PautaRepository pautaRepository) {
         this.repository = repository;
         this.votoService = votoService;
         this.pautaRepository = pautaRepository;

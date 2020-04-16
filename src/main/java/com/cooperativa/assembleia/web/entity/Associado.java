@@ -13,21 +13,15 @@ import java.io.Serializable;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "pauta")
-public class Pauta implements Serializable {
-    private static final long serialVersionUID = -545499144683315996L;
+@Table(name = "associado")
+public class Associado implements Serializable {
+    private static final long serialVersionUID = -4711647541237521203L;
 
     @Id
     @Column(name = "id", nullable = false)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "pergunta", nullable = false)
-    private String pergunta;
-
-    @OneToOne
-    @JoinColumn(name = "resultado_id", referencedColumnName = "id")
-    private Resultado resultado;
-
-
+    @Column(name = "cpf", nullable = false)
+    private String cpf;
 }
