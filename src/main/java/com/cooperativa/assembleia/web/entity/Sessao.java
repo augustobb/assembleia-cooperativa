@@ -1,5 +1,6 @@
 package com.cooperativa.assembleia.web.entity;
 
+import com.cooperativa.assembleia.web.service.EncerramentoScheduler;
 import com.cooperativa.assembleia.web.service.EncerramentoSessaoService;
 import com.cooperativa.assembleia.web.task.EncerramentoSessaoTask;
 import lombok.*;
@@ -29,8 +30,8 @@ public class Sessao implements Serializable {
     @Column(name = "segundos_duracao", nullable = false)
     private Long segundosDuracao;
 
-    @Column(name = "data_abertura", nullable = false)
-    private LocalDateTime dataAbertura;
+    @Column(name = "data_hora_abertura", nullable = false)
+    private LocalDateTime dataHoraAbertura;
 
     @Getter(AccessLevel.NONE)
     @Column(name = "encerrada", nullable = false)
@@ -42,9 +43,9 @@ public class Sessao implements Serializable {
         return this.encerrada;
     }
 
-    public void agendarEncerramento() {
+    public void agendarEncerramento(EncerramentoScheduler encerramentoScheduler) {
         EncerramentoSessaoTask encerramento = new EncerramentoSessaoTask(this);
-        new java.util.Timer().schedule(encerramento, this.getSegundosDuracao()*1000);
+        encerramentoScheduler.schedule(encerramento, this.getSegundosDuracao()*1000);
     }
 
     public void encerrar() {

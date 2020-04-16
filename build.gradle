@@ -4,6 +4,8 @@ plugins {
 	id 'java'
 }
 
+apply plugin: 'groovy'
+
 group = 'com.cooperativa'
 version = '1.0.0'
 sourceCompatibility = '11'

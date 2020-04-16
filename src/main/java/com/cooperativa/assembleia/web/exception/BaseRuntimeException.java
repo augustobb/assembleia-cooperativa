@@ -9,7 +9,7 @@ public abstract class BaseRuntimeException extends RuntimeException {
     private static final long serialVersionUID = -8962469694754031642L;
 
     private final MessageKey messageKey;
-    private final Object[] args;
+    private final transient Object[] args;
 
     public BaseRuntimeException(MessageKey messageKey, Object ...args) {
         this.messageKey = messageKey;

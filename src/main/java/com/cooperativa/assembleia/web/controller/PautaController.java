@@ -58,6 +58,6 @@ public class PautaController implements PautaAPI {
     @Override
     public ResponseEntity<ResultadoResponse> buscarResultadoPauta(Long id) {
         log.info("Buscando resultado da pauta {}...", id);
-        return null;
+        return ResponseEntity.of(service.buscarResultado(id));
     }
 }
