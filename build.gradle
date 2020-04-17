@@ -7,7 +7,7 @@ plugins {
 apply plugin: 'groovy'
 
 group = 'com.cooperativa'
-version = '1.0.0'
+version = 'v1.0.0'
 sourceCompatibility = '11'
 
 configurations {
@@ -39,4 +39,6 @@ dependencies {
 	testRuntime "net.bytebuddy:byte-buddy:1.9.3"
 	compile 'org.objenesis:objenesis:1.4'
 	compile "cglib:cglib:2.2"
+	compile group: 'io.springfox', name: 'springfox-swagger2', version: '2.9.2'
+	compile group: 'io.springfox', name: 'springfox-swagger-ui', version: '2.9.2'
 }
