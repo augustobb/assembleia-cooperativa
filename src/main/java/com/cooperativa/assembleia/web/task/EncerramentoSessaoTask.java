@@ -1,10 +1,11 @@
 package com.cooperativa.assembleia.web.task;
 
 import com.cooperativa.assembleia.web.entity.Sessao;
-import org.springframework.transaction.annotation.Transactional;
+import lombok.EqualsAndHashCode;
 
 import java.util.TimerTask;
 
+@EqualsAndHashCode(callSuper = false)
 public class EncerramentoSessaoTask extends TimerTask {
     private final Sessao sessao;
 
@@ -13,7 +14,6 @@ public class EncerramentoSessaoTask extends TimerTask {
     }
 
     @Override
-    @Transactional
     public void run() {
         sessao.encerrar();
     }

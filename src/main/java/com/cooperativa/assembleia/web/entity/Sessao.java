@@ -49,6 +49,6 @@ public class Sessao implements Serializable {
     }
 
     public void encerrar() {
-        encerramentoService.encerrarSessao(this);
+        encerramentoService.encerrar(this);
     }
 }

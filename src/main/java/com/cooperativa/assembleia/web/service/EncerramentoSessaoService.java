@@ -26,7 +26,7 @@ public class EncerramentoSessaoService {
     }
 
     @Transactional
-    public void encerrarSessao(Sessao sessao) {
+    public void encerrar(Sessao sessao) {
         salvarEncerramento(sessao);
         Pauta pauta = sessao.getPauta();
         Resultado resultado = contabilizarResultado(sessao.getPauta());
