@@ -12,7 +12,7 @@ public enum MessageKey {
     SESSAO_PAUTA_ENCERRADA("erro.sessaoPautaEncerrada"),
     CPF_ASSOCIADO_INVALIDO("erro.cpfAssociadoInvalido"),
     ASSOCIADO_NAO_PODE_VOTAR("erro.associadoNaoPodeVotar"),
-    ASSOCIADO_JA_VOTOU_NESTA_PAUTA("erro.associadoJVotouNestaPauta");
+    ASSOCIADO_JA_VOTOU_NESTA_PAUTA("erro.associadoJaVotouNestaPauta");
 
     private final String key;
 

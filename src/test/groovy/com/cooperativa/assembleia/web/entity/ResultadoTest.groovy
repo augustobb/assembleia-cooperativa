@@ -7,7 +7,7 @@ class ResultadoTest extends Specification {
     Resultado resultado
 
     void setup() {
-        resultado = null
+        resultado = new Resultado()
     }
 
     def "em resultado com mais votos sim do que não, a resposta deve ser Sim"() {

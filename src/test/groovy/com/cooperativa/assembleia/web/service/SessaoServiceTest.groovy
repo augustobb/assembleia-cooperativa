@@ -17,16 +17,15 @@ class SessaoServiceTest extends Specification {
     def mockSessao = Mock(Sessao)
 
     void setup() {
+        encerramentoService.getScheduler() >> Mock(EncerramentoScheduler)
         service = new SessaoService(repository, encerramentoService)
     }
 
-    def """dado uma pauta sem sessões e a quantidade de segundos para durar, quando solicitar abertura,
-            deve criar uma sessão para a pauta"""() {
+    def "dado uma pauta, quando solicitar abertura, deve criar uma sessão para a pauta"() {
         Sessao sessaoCriada = null
 
-        given: "pauta sem sessões"
+        given: "pauta"
         def pauta = Pauta.builder().id(1L).build()
-        repository.findByPauta(pauta) >> Optional.empty()
 
         and: "quantidade de segundos para durar"
         def segundosDuracao = 30
@@ -39,11 +38,9 @@ class SessaoServiceTest extends Specification {
         sessaoCriada.getPauta() == pauta
         sessaoCriada.getSegundosDuracao() == segundosDuracao
         sessaoCriada.getDataHoraAbertura().isBefore(LocalDateTime.now())
-        !sessaoCriada.isEncerrada()
     }
 
-    def """dado uma pauta, quando solicitar abertura, deve agendar o encerramento da sessão criada"""() {
-
+    def "dado uma pauta, quando solicitar abertura, deve agendar o encerramento da sessão criada"() {
         given: "pauta"
         def pauta = Pauta.builder().id(1L).build()
 
