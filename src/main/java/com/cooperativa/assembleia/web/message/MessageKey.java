@@ -7,7 +7,11 @@ public enum MessageKey {
 
     ERRO_NAO_ESPERADO("erro.naoEsperado"),
     PARAMETROS_INVALIDOS("erro.parametrosInvalidos"),
-    SESSAO_JA_ABERTA_PARA_PAUTA("erro.sessaoJaAbertaParaPauta");
+    SESSAO_JA_ABERTA_PARA_PAUTA("erro.sessaoJaAbertaParaPauta"),
+    SESSAO_PAUTA_ENCERRADA("erro.sessaoPautaEncerrada"),
+    CPF_ASSOCIADO_INVALIDO("erro.cpfAssociadoInvalido"),
+    ASSOCIADO_NAO_PODE_VOTAR("erro.associadoNaoPodeVotar"),
+    ASSOCIADO_JA_VOTOU_NESTA_PAUTA("erro.associadoJVotouNestaPauta");
 
     private final String key;
 

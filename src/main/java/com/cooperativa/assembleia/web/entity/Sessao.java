@@ -32,15 +32,7 @@ public class Sessao implements Serializable {
     @Column(name = "data_hora_abertura", nullable = false)
     private LocalDateTime dataHoraAbertura;
 
-    @Getter(AccessLevel.NONE)
-    @Column(name = "encerrada", nullable = false)
-    private Boolean encerrada;
-
     private transient EncerramentoSessaoService encerramentoService;
-
-    public boolean isEncerrada() {
-        return this.encerrada;
-    }
 
     public void agendarEncerramento() {
         EncerramentoSessaoTask encerramento = new EncerramentoSessaoTask(this);

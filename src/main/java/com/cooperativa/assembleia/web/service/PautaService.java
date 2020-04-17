@@ -55,7 +55,7 @@ public class PautaService {
         return converter.toResponse(pauta);
     }
 
-    private Pauta buscarPorId(Long id) {
+    private Pauta getById(Long id) {
         return repository.findById(id).orElseThrow(() -> {
             String message = "Não foi possível encontrar pauta com identificador " + id;
             log.error(message);
@@ -65,13 +65,14 @@ public class PautaService {
 
     @Transactional
     public void abrirSessao(Long id, Long segundosDuracao) {
-        Pauta pauta = buscarPorId(id);
-        sessaoService.abrir(pauta, segundosDuracao);
+        sessaoService.abrir(getById(id), segundosDuracao);
     }
 
     @Transactional
     public void votar(Long id, VotoRequest voto) {
-        votoService.salvar(voto, buscarPorId(id));
+        Pauta pauta = getById(id);
+        pauta.validarPautaAberta();
+        votoService.salvar(voto, pauta);
     }
 
     @Transactional(readOnly = true)

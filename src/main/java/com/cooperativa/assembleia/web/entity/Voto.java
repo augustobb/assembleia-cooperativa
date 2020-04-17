@@ -27,9 +27,16 @@ public class Voto implements Serializable {
     @JoinColumn(name = "pauta_id", referencedColumnName = "id", nullable = false)
     private Pauta pauta;
 
+    @ManyToOne
+    @JoinColumn(name = "associado_id", referencedColumnName = "id", nullable = false)
+    private Associado associado;
+
     @Enumerated(EnumType.STRING)
     @Column(name = "resposta")
     private Resposta resposta;
 
+    public void validarHabilitacaoDoAssociado() {
+        this.associado.validarHabilitacaoVoto();
+    }
 
 }

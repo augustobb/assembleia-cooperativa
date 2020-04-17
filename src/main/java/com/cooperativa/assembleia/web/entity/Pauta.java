@@ -1,5 +1,6 @@
 package com.cooperativa.assembleia.web.entity;
 
+import com.cooperativa.assembleia.web.exception.BusinessException;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -7,6 +8,9 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.io.Serializable;
+
+import static com.cooperativa.assembleia.web.message.MessageKey.SESSAO_PAUTA_ENCERRADA;
+import static java.util.Objects.nonNull;
 
 @Data
 @Builder
@@ -29,5 +33,14 @@ public class Pauta implements Serializable {
     @JoinColumn(name = "resultado_id", referencedColumnName = "id")
     private Resultado resultado;
 
+    private boolean isEncerrada() {
+        return nonNull(resultado);
+    }
+
+    public void validarPautaAberta() {
+        if(isEncerrada()) {
+            throw new BusinessException(SESSAO_PAUTA_ENCERRADA);
+        }
+    }
 
 }

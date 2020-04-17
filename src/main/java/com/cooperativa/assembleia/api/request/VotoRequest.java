@@ -1,12 +1,14 @@
 package com.cooperativa.assembleia.api.request;
 
 import com.cooperativa.assembleia.web.annotation.RespostaValida;
+import lombok.Builder;
 import lombok.Data;
 
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 
 @Data
+@Builder
 public class VotoRequest implements Serializable {
     private static final long serialVersionUID = 4575633174135859884L;
 

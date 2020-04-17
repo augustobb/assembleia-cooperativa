@@ -4,7 +4,6 @@ import com.cooperativa.assembleia.web.service.EncerramentoScheduler
 import com.cooperativa.assembleia.web.service.EncerramentoSessaoService
 import com.cooperativa.assembleia.web.task.EncerramentoSessaoTask
 import spock.lang.Specification
-import spock.lang.Unroll
 
 class SessaoTest extends Specification {
 
@@ -16,16 +15,6 @@ class SessaoTest extends Specification {
     void setup() {
         encerramentoSessaoService.getScheduler() >> encerramentoScheduler
         sessao = Sessao.builder().encerramentoService(encerramentoSessaoService).build()
-    }
-
-    @Unroll
-    def "deve informar corretamente se a sessão está encerrada ou não quando o valor da flag for #encerrada"() {
-        given:
-        sessao.setEncerrada(encerrada)
-        expect:
-        sessao.isEncerrada() == encerrada
-        where:
-        encerrada << [true, false]
     }
 
     def """ao agendar encerramento de sessão, deve chamar scheduler de encerramento usando o delay definido pelos

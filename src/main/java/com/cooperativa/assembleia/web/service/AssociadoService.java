@@ -3,24 +3,32 @@ package com.cooperativa.assembleia.web.service;
 import com.cooperativa.assembleia.api.request.AssociadoRequest;
 import com.cooperativa.assembleia.api.response.AssociadoResponse;
 import com.cooperativa.assembleia.web.entity.Associado;
+import com.cooperativa.assembleia.web.integration.client.UserInfoClient;
 import com.cooperativa.assembleia.web.repository.AssociadoRepository;
 import com.cooperativa.assembleia.web.service.converter.AssociadoConverter;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.security.InvalidParameterException;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+import static com.cooperativa.assembleia.web.integration.enums.UserInfoStatus.ABLE_TO_VOTE;
+
+@Slf4j
 @Service
 public class AssociadoService {
 
     private final AssociadoRepository repository;
     private final AssociadoConverter converter;
+    private final UserInfoClient userInfoClient;
 
-    public AssociadoService(AssociadoRepository repository, AssociadoConverter converter) {
+    public AssociadoService(AssociadoRepository repository, AssociadoConverter converter, UserInfoClient userInfoClient) {
         this.repository = repository;
         this.converter = converter;
+        this.userInfoClient = userInfoClient;
     }
 
     @Transactional(readOnly = true)
@@ -41,4 +49,24 @@ public class AssociadoService {
         Associado associado = repository.save(converter.toEntity(request));
         return converter.toResponse(associado);
     }
+
+    private Associado getById(Long id) {
+        return repository.findById(id).orElseThrow(() -> {
+            String message = "Não foi possível encontrar associado com identificador " + id;
+            log.error(message);
+            return new InvalidParameterException(message);
+        });
+    }
+
+    private Associado withInfoHabilitacaoVoto(Associado associado) {
+        String statusCpf = userInfoClient.getByCpf(associado.getCpf());
+        associado.setPodeVotar(ABLE_TO_VOTE.name().equals(statusCpf));
+        return associado;
+    }
+
+    @Transactional(readOnly = true)
+    public Associado buscarComDetalhesHabilitacaoVoto(Long id) {
+        return withInfoHabilitacaoVoto(getById(id));
+    }
+
 }

@@ -32,11 +32,9 @@ public class SessaoService {
                 .pauta(pauta)
                 .dataHoraAbertura(LocalDateTime.now())
                 .segundosDuracao(segundosDuracao)
-                .encerrada(false)
                 .encerramentoService(encerramentoService)
                 .build();
 
-        log.info("ABRINDO Pauta:{}, DURACAO: {}", pauta.getId(), segundosDuracao);
         repository.save(sessao).agendarEncerramento();
     }
 
