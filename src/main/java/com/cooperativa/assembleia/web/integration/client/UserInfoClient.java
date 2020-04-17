@@ -11,6 +11,7 @@ import org.springframework.web.client.RestTemplate;
 import java.util.Collections;
 
 import static com.cooperativa.assembleia.web.message.MessageKey.CPF_ASSOCIADO_INVALIDO;
+import static java.util.Optional.ofNullable;
 
 @Slf4j
 @Service
@@ -32,12 +33,13 @@ public class UserInfoClient {
                 .exchange(url, HttpMethod.GET, getHttpEntityWithHeaders(), UserInfoResponse.class);
 
         if (!response.getStatusCode().is2xxSuccessful()) {
-            log.error("Error Request SICLI");
             throw new BusinessException(CPF_ASSOCIADO_INVALIDO, cpf);
         }
 
         log.info("Retorno do serviço externo: " + response.getBody());
-        return response.getBody().getStatus();
+        return ofNullable(response.getBody())
+                .map(UserInfoResponse::getStatus)
+                .orElseGet(String::new);
     }
 
     private HttpEntity<String> getHttpEntityWithHeaders() {

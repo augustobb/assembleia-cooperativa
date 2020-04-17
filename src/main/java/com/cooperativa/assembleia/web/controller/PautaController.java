@@ -43,7 +43,7 @@ public class PautaController implements PautaAPI {
 
     @Override
     public ResponseEntity<Void> abrirSessao(Long id, Long segundosDuracao) {
-        log.info("Incluindo sessão para pauta: {}, duração: {}s...", id, segundosDuracao);
+        log.info("Abrindo sessão para pauta: {}, duração: {}s...", id, segundosDuracao);
         service.abrirSessao(id, segundosDuracao);
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }

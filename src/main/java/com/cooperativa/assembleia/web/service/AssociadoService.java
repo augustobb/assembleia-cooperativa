@@ -6,7 +6,6 @@ import com.cooperativa.assembleia.web.entity.Associado;
 import com.cooperativa.assembleia.web.integration.client.UserInfoClient;
 import com.cooperativa.assembleia.web.repository.AssociadoRepository;
 import com.cooperativa.assembleia.web.service.converter.AssociadoConverter;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -17,7 +16,6 @@ import java.util.stream.Collectors;
 
 import static com.cooperativa.assembleia.web.integration.enums.UserInfoStatus.ABLE_TO_VOTE;
 
-@Slf4j
 @Service
 public class AssociadoService {
 
@@ -51,11 +49,9 @@ public class AssociadoService {
     }
 
     private Associado getById(Long id) {
-        return repository.findById(id).orElseThrow(() -> {
-            String message = "Não foi possível encontrar associado com identificador " + id;
-            log.error(message);
-            return new InvalidParameterException(message);
-        });
+        return repository.findById(id).orElseThrow(() ->
+            new InvalidParameterException("Não foi possível encontrar associado com identificador " + id)
+        );
     }
 
     private Associado withInfoHabilitacaoVoto(Associado associado) {

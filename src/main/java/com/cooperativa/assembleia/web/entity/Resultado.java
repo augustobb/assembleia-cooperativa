@@ -17,13 +17,14 @@ import static com.cooperativa.assembleia.web.enums.Resposta.SIM;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
+@SequenceGenerator(name = "seq_resultado", sequenceName = "seq_resultado", allocationSize = 1)
 @Table(name = "resultado")
 public class Resultado implements Serializable {
     private static final long serialVersionUID = -4679934083810364256L;
 
     @Id
     @Column(name = "id", nullable = false)
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_resultado")
     private Long id;
 
     private Long votosSim;

@@ -8,7 +8,6 @@ import com.cooperativa.assembleia.web.entity.Pauta;
 import com.cooperativa.assembleia.web.repository.PautaRepository;
 import com.cooperativa.assembleia.web.service.converter.PautaConverter;
 import com.cooperativa.assembleia.web.service.converter.ResultadoEntityToResponse;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -17,7 +16,6 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-@Slf4j
 @Service
 public class PautaService {
 
@@ -56,21 +54,21 @@ public class PautaService {
     }
 
     private Pauta getById(Long id) {
-        return repository.findById(id).orElseThrow(() -> {
-            String message = "Não foi possível encontrar pauta com identificador " + id;
-            log.error(message);
-            return new InvalidParameterException(message);
-        });
+        return repository.findById(id).orElseThrow(() ->
+            new InvalidParameterException("Não foi possível encontrar pauta com identificador " + id)
+        );
     }
 
     @Transactional
     public void abrirSessao(Long id, Long segundosDuracao) {
-        sessaoService.abrir(getById(id), segundosDuracao);
+        Pauta pauta = sessaoService.withInfoSessao(getById(id));
+        pauta.validarSemSessaoExistente();
+        sessaoService.abrir(pauta, segundosDuracao);
     }
 
     @Transactional
     public void votar(Long id, VotoRequest voto) {
-        Pauta pauta = getById(id);
+        Pauta pauta = sessaoService.withInfoSessao(getById(id));
         pauta.validarPautaAberta();
         votoService.salvar(voto, pauta);
     }

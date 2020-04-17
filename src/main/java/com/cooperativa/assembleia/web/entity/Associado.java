@@ -13,13 +13,14 @@ import static com.cooperativa.assembleia.web.message.MessageKey.ASSOCIADO_NAO_PO
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
+@SequenceGenerator(name = "seq_associado", sequenceName = "seq_associado", allocationSize = 1)
 @Table(name = "associado")
 public class Associado implements Serializable {
     private static final long serialVersionUID = -4711647541237521203L;
 
     @Id
     @Column(name = "id", nullable = false)
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_associado")
     private Long id;
 
     @Column(name = "cpf", nullable = false)

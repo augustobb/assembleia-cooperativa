@@ -13,13 +13,14 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
+@SequenceGenerator(name = "seq_sessao", sequenceName = "seq_sessao", allocationSize = 1)
 @Table(name = "sessao")
 public class Sessao implements Serializable {
     private static final long serialVersionUID = -8052782366191911358L;
 
     @Id
     @Column(name = "id", nullable = false)
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_sessao")
     private Long id;
 
     @OneToOne

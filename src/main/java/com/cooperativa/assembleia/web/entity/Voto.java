@@ -14,13 +14,14 @@ import java.io.Serializable;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
+@SequenceGenerator(name = "seq_voto", sequenceName = "seq_voto", allocationSize = 1)
 @Table(name = "voto")
 public class Voto implements Serializable {
     private static final long serialVersionUID = -8040725437471100882L;
 
     @Id
     @Column(name = "id", nullable = false)
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_voto")
     private Long id;
 
     @ManyToOne

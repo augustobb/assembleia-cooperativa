@@ -3,6 +3,7 @@ package com.cooperativa.assembleia.web.exception;
 
 import com.cooperativa.assembleia.web.message.MessageHandler;
 import com.cooperativa.assembleia.web.message.MessageKey;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -20,6 +21,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
+@Slf4j
 @RestController
 @ControllerAdvice
 public class BaseExceptionHandler extends ResponseEntityExceptionHandler {
@@ -41,22 +43,27 @@ public class BaseExceptionHandler extends ResponseEntityExceptionHandler {
                 .stream()
                 .map(messageHandler::getMessage)
                 .collect(Collectors.toList());
+        log.error(message);
+        log.error(details.toString());
         return new ResponseEntity<>(new ErrorDetails(message, details), HttpStatus.BAD_REQUEST);
     }
 
     @ExceptionHandler(InvalidParameterException.class)
     public final ResponseEntity<Object> handleInvalidParameterException(InvalidParameterException exception) {
+        log.error(exception.getMessage());
         return new ResponseEntity<>(new ErrorDetails(exception.getMessage()), HttpStatus.BAD_REQUEST);
     }
 
     @ExceptionHandler(ConstraintViolationException.class)
     public final ResponseEntity<Object> handleConstraintViolationException(ConstraintViolationException exception) {
+        log.error(exception.getMessage());
         return new ResponseEntity<>(new ErrorDetails(exception.getMessage()), HttpStatus.BAD_REQUEST);
     }
 
     @ExceptionHandler(BusinessException.class)
     public final ResponseEntity<Object> handleBusinessException(BusinessException exception) {
         String message = messageHandler.getMessage(exception.getMessageKey(), exception.getArgs());
+        log.error(message);
         return new ResponseEntity<>(new ErrorDetails(message), HttpStatus.UNPROCESSABLE_ENTITY);
     }
 
@@ -64,6 +71,7 @@ public class BaseExceptionHandler extends ResponseEntityExceptionHandler {
     public final ResponseEntity<Object> handleAllExceptions(Exception exception) {
         logger.error(exception.getMessage(), exception);
         String message = messageHandler.getMessage(MessageKey.ERRO_NAO_ESPERADO);
+        log.error(exception.getMessage());
         return new ResponseEntity<>(new ErrorDetails(message, Collections.singletonList(exception.getMessage())),
                 HttpStatus.INTERNAL_SERVER_ERROR);
     }
