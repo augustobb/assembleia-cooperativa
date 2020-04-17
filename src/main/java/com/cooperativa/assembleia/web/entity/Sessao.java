@@ -1,6 +1,5 @@
 package com.cooperativa.assembleia.web.entity;
 
-import com.cooperativa.assembleia.web.service.EncerramentoScheduler;
 import com.cooperativa.assembleia.web.service.EncerramentoSessaoService;
 import com.cooperativa.assembleia.web.task.EncerramentoSessaoTask;
 import lombok.*;
@@ -43,9 +42,10 @@ public class Sessao implements Serializable {
         return this.encerrada;
     }
 
-    public void agendarEncerramento(EncerramentoScheduler encerramentoScheduler) {
+    public void agendarEncerramento() {
         EncerramentoSessaoTask encerramento = new EncerramentoSessaoTask(this);
-        encerramentoScheduler.schedule(encerramento, this.getSegundosDuracao()*1000);
+        encerramentoService.getScheduler()
+                .schedule(encerramento, this.getSegundosDuracao()*1000);
     }
 
     public void encerrar() {

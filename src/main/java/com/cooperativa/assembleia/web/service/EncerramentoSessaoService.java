@@ -4,6 +4,7 @@ import com.cooperativa.assembleia.web.entity.Pauta;
 import com.cooperativa.assembleia.web.entity.Resultado;
 import com.cooperativa.assembleia.web.entity.Sessao;
 import com.cooperativa.assembleia.web.repository.SessaoRepository;
+import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -14,10 +15,14 @@ public class EncerramentoSessaoService {
 
     private final SessaoRepository repository;
     private final ResultadoService resultadoService;
+    @Getter
+    private final EncerramentoScheduler scheduler;
 
-    public EncerramentoSessaoService(SessaoRepository repository, ResultadoService resultadoService) {
+    public EncerramentoSessaoService(SessaoRepository repository, ResultadoService resultadoService,
+                                     EncerramentoScheduler scheduler) {
         this.repository = repository;
         this.resultadoService = resultadoService;
+        this.scheduler = scheduler;
     }
 
     @Transactional

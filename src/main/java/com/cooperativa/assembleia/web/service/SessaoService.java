@@ -18,13 +18,10 @@ public class SessaoService {
 
     private final SessaoRepository repository;
     private final EncerramentoSessaoService encerramentoService;
-    private final EncerramentoScheduler encerramentoScheduler;
 
-    public SessaoService(SessaoRepository repository, EncerramentoSessaoService encerramentoService,
-                         EncerramentoScheduler encerramentoScheduler){
+    public SessaoService(SessaoRepository repository, EncerramentoSessaoService encerramentoService){
         this.repository = repository;
         this.encerramentoService = encerramentoService;
-        this.encerramentoScheduler = encerramentoScheduler;
     }
 
     @Transactional
@@ -40,7 +37,7 @@ public class SessaoService {
                 .build();
 
         log.info("ABRINDO Pauta:{}, DURACAO: {}", pauta.getId(), segundosDuracao);
-        repository.save(sessao).agendarEncerramento(encerramentoScheduler);
+        repository.save(sessao).agendarEncerramento();
     }
 
     private void assertPautaSemSessoes(Pauta pauta) {
