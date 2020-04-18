@@ -1,7 +1,7 @@
 package com.cooperativa.assembleia.web.integration.client;
 
 import com.cooperativa.assembleia.web.exception.BusinessException;
-import com.cooperativa.assembleia.web.integration.respose.UserInfoResponse;
+import com.cooperativa.assembleia.web.integration.response.UserInfoResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.*;

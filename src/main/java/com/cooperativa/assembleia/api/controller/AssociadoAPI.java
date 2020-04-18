@@ -20,7 +20,8 @@ public interface AssociadoAPI {
 
     @GetMapping("/{id}")
     @ApiOperation(value = "Busca associado pelo identificador", response = AssociadoResponse.class)
-    ResponseEntity<AssociadoResponse> buscarPorId(@PathVariable Long id);
+    ResponseEntity<AssociadoResponse> buscarPorId(
+            @PathVariable @ApiParam(value = "Identificador do associado", required = true) Long id);
 
     @PostMapping
     @ApiOperation(value = "Cadastra um novo associado, retornando associado cadastrado", response = AssociadoResponse.class)

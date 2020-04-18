@@ -1,4 +1,4 @@
-package com.cooperativa.assembleia.web.integration.respose;
+package com.cooperativa.assembleia.web.integration.response;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
