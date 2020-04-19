@@ -44,4 +44,20 @@ Informações sobre a Implementação
 	Organização interna da aplicação:
 		De modo geral, a aplicação é organizada no modelo de 3 camadas de controle (interface com cliente), 
 		serviço (controle de regras de negócio e comunicação entre camadas) e repositório (armazenamento de dados).
+		Esse tipo de arquitetura tem se popularizado bastante, pelo fato de permitir o desenvolvimento com maior 
+		separação de responsabilidades entre as classes e redução do acoplamento.
+		Outro ponto relevante é a separação de um pacote contendo classes e interfaces que são relevantes para um
+		cliente da API: classes de Request aceitas pela API e de Response a serem esperadas, interfaces das 
+		controllers, que expõe o contrato a ser seguido. Essa separação é útil porque possibilita disponibilizar 
+		essas informações para os clientes sem a necessidade de expor detalhes da implementação. O uso de interface
+		para as controllers também é útil para o cadastro de anotações Spring Web, Swagger e validação dos
+		parâmetros das requisições.
+		Além disso, foram utilizados fundamentos de DDD (Domain Driven Design), como o uso de modelagem rica, onde
+		onde as entidades (classes que representam conceitos do negócio que possuem informações que precisam ser 
+		persistidas e/ou consultadas) assumem um papel importante no objetivo de controlar das regras de negócio, 
+		fornecendo métodos relevantes, auxiliando os serviços a realizarem esse objetivo.
+		
+Tratamento de Erros e Exceções
+
+
 	
