@@ -33,6 +33,12 @@ Documentação API
 	requisições e respostas, permitindo uma descrição das operações e dos componentes dentro do próprio código. O link
 	abaixo é um documento baseado na documentação gerada pelo Swagger:
 	https://docs.google.com/document/d/1INldnCpntCRKkZmyrMnL8oVUnL1Lm_1jlzXHjsaXxGY
+		
+		Sobre a implementação da API, desconsiderando as operações sobre associados, nota-se que todas as demais
+	operações estão na mesma rota "/pautas". A implementação foi feita dessa forma porque, no fim das contas, todo o
+	processo de votação gira em torno das pautas: pautas devem ser criadas, pautas devem poder ter sessão aberta,
+	pautas devem ser votadas e, por fim, pautas devem ter resultados obtidos. Contudo, é claro, essas operações acabam
+	sendo divididas internamente entre serviços especializados.
 	
 Informações sobre a Implementação
 
@@ -73,6 +79,9 @@ Tratamento de Erros e Exceções
 	
 Modelagem Utilizada
 
+	Linik para o documento com o diagrama ER e comentários sobre a modelagem utilizada:
+	https://docs.google.com/document/d/1TLbPpUUeqBk4dwa2BAG0sypJFRXDfyJwhcP-UaNIwT0
+	
 Testes Automatizados
 
 Integração com Sistemas Externos
