@@ -84,9 +84,27 @@ Modelagem Utilizada
 	
 Testes Automatizados
 
+		A implementação de testes unitários foi feita usando o framework Spock, que possibilita o desenvolvimento 
+	de testes bem documentados e organizados, seguindo o padrão "given-when-then", de modo que os testes sirvam 
+	realmente como uma especificação do comportamento ao utilizar-se a unidade do sistema que está sendo testada.
+		O próximo passo a ser realizado na aplicação é a implementação de testes de integração, subindo a 
+	aplicação em um contexto mockado, para verificar o funcionamento geral da API. Esses testes serão bastante 
+	importantes, pois oferecem uma análise complementar à fornecida pelos testes unitários, principalmente na a 
+	verificação de falhas em configurações, validação de parâmetros dos métodos da API e análise do tratamento de 
+	erros. Além disso, seria de igual importância o aumento na cobertura de testes unitários, pois algumas classes
+	ainda não estão cobertas.
+	
+
 Integração com Sistemas Externos
 
+		A integração com sistemas externos foi implementada com um cliente que usa a classe RestTemplate, 
+	fornecida pelo pacote Spring Web. Para este cliente, também foi criada uma classe de resposta, com o conteúdo
+	esperado do serviço externo. Baseado no valor obtido desse serviço o sistema verifica se o CPF é valido, e 
+	depois, durante o processo de controle do voto, é feita a análise de habilitação de voto.
+
 Mensageria, Filas e Performance
+
+	Na implementação da API, não foi utilizado sistema de mensageria para emissão dos reusltados da votação.
 
 Versionamento da API
 
