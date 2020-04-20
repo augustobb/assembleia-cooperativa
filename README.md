@@ -51,7 +51,8 @@ Informações sobre a Implementação
 	
 		De modo geral, a aplicação é organizada no modelo de 3 camadas de controle (interface com cliente), 
 	serviço (controle de regras de negócio e comunicação entre camadas) e repositório (armazenamento de dados). Esse 
-	tipo de arquitetura tem se popularizado bastante, pelo fato de permitir o desenvolvimento com maior separação de 			responsabilidades entre as classes e redução do acoplamento.
+	tipo de arquitetura tem se popularizado bastante, pelo fato de permitir o desenvolvimento com maior separação de 
+	responsabilidades entre as classes e redução do acoplamento.
 		Outro ponto relevante é a separação de um pacote contendo classes e interfaces que são relevantes para um
 	cliente da API: classes de Request aceitas pela API e de Response a serem esperadas, interfaces das controllers, 
 	que expõe o contrato a ser seguido. Essa separação é útil porque possibilita disponibilizar essas informações para 
@@ -104,10 +105,27 @@ Integração com Sistemas Externos
 
 Mensageria, Filas e Performance
 
-	Na implementação da API, não foi utilizado sistema de mensageria para emissão dos reusltados da votação.
+		Na implementação da API, não foi utilizado sistema de mensageria para emissão dos reusltados da votação.
+	No entanto, seria plenamente viável o uso de uma ferramenta como o Kafka para disponibilizar o resultado de cada
+	votação, para que pudesse ser lido por aplicações consumidoras (que possivelmente seria a mesma que enviaria os 
+	votos). Nesse cenário, o serviço da aplicação que é responsável pelo encerramento das sessões seria um Producer.
+		O uso de mensageria e filas também seria interessante para o cenário de grande volume de votos, em que
+	poderia ocorrer uma sobrecarga no sistema e, dessa forma, gerar problemas no registro dos votos. Fazendo o uso
+	de filas, esse registro poderia ser feito de forma assíncrona, tornando mais o processo de votação mais 
+	confiável.
 
 Versionamento da API
 
-
-
+		A versão inicial disponibilizada da API é v1.0.0. Com isso, seria possível aplicar um versionamento
+	semântico (https://semver.org/), onde o primeiro número é incrementado a cada alteração incompatível (zerando
+	os demais números), o segundo é incrementado a cada adição de funcionalidade com alteração compatível (zerando 
+	o terceiro número), e o terceiro é incrementado a cada correção de bug.
+		Conforme indicado pela URL gerada pela aplicação, a escolha da versão seria por URI path (assim como 
+	poderia ser de outras formas, como parâmetro da requisição, por HTTP header, etc). O Swagger e o Spring 
+	fornecem recursos que possibilitam distinguir dentre os métodos das controllers a qual versão aquele método 
+	pertence, além de poder sinalizar possíveis métodos deprecados. Dessa forma, seria possível manter a
+	documentação do Swagger completa, com todas as versões, onde o cliente pode selecionar qual documentação ele
+	deseja visualizar. Para utilizar esses recursos sem ter que manter implementações antigas no código de produção,
+	uma possibilidade seria manter os métodos antigos apenas na interface das controllers, definindo eles como 
+	default.
 	
