@@ -80,7 +80,7 @@ Tratamento de Erros e Exceções
 	
 Modelagem Utilizada
 
-	Linik para o documento com o diagrama ER e comentários sobre a modelagem utilizada:
+	Link para o documento com o diagrama ER e comentários sobre a modelagem utilizada:
 	https://docs.google.com/document/d/1TLbPpUUeqBk4dwa2BAG0sypJFRXDfyJwhcP-UaNIwT0
 	
 Testes Automatizados
